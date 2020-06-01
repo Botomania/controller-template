@@ -11,7 +11,7 @@ class Manager:
     def __init__(self, players, image):
         self.players = players
         self.port = 5000
-        self.endpoint = f"http://127.0.0.1:{self.port}"
+        self.endpoint = f"http://docker:{self.port}"
 
         if not docker_helper.run(image, {"5000/tcp": str(self.port)}):
             print("Couldn't start manager")

@@ -11,7 +11,7 @@ class Player:
         self.id = player["id"]
         self.name = player["name"]
         self.port = 6000 + self.id
-        self.endpoint = f"http://127.0.0.1:{self.port}"
+        self.endpoint = f"http://docker:{self.port}"
         self.timeout = timeout
 
         self.image = player["image"]

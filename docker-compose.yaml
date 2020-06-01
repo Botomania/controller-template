@@ -1,0 +1,13 @@
+version: "3"
+services:
+  controller:
+    build: .
+    ports:
+      - "3000:3000"
+  docker:
+    image: docker:dind
+    privileged: true
+    environment:
+      DOCKER_TLS_CERTDIR: ""
+    ports:
+      - "2735:2375"
