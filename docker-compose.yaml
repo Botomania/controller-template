@@ -10,4 +10,4 @@ services:
     environment:
       DOCKER_TLS_CERTDIR: ""
     ports:
-      - "2735:2375"
+      - "2735:2735"
