@@ -23,7 +23,7 @@ class Player:
         self.image = player["image"]
 
         if not docker_helper.run(self.image, {"5000/tcp": str(port)}):
-            print(f"Couldn't start player {self.name (self.id)}")
+            print(f"Couldn't start player {self.name} ({self.id})")
             sys.exit(1)
 
     def action(self, state):
