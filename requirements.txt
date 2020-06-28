@@ -1,3 +1,5 @@
 flask
 docker
 requests
+-e git+https://gitlab.com/felicity-iiith/interactive-matches/manager-client.git#egg=manager-client
+-e git+https://gitlab.com/felicity-iiith/interactive-matches/player-client.git#egg=player-client
