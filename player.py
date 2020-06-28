@@ -29,7 +29,9 @@ class Player:
     def action(self, state):
         # TODO: figure out how to use timeout with api
         try:
-            resp = requests.post(self.endpoint + "/", json=state, timeout=self.timeout)
+            resp = requests.post(
+                self.endpoint + "/", json={"state": state}, timeout=self.timeout
+            )
         except Exception:
             # TODO: make this helpful
             print("Error!")

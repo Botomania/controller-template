@@ -39,7 +39,7 @@ def init():
     players = request.json["players"]
     manager = request.json["manager"]
 
-    c = Controller(players, manager, config.timeout)
+    c = Controller(players, manager, config.timeout, config.max_steps)
 
     return json.dumps({"success": True})
 

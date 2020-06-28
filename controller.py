@@ -1,12 +1,15 @@
+import sys
+
 from manager import Manager
 from player import Player
 
 
 class Controller:
-    def __init__(self, players, manager, timeout):
+    def __init__(self, players, manager, timeout, max_steps):
         self.players = []
         self.manager = Manager(players, manager["image"])
         self.state = "INITIALIZING"
+        self.max_steps = max_steps
 
         for player in players:
             self.players.append(Player(player, timeout))
@@ -15,24 +18,29 @@ class Controller:
         self.state = "RUNNING"
 
         game_state = self.manager.get_state()
-        current_player = 0
+        current_player = self.players[0]
 
-        while True:
-            last_action = self.players[current_player].action(game_state)
+        num_steps = 0
 
-            verdict = self.manager.action(
-                self.players[current_player].to_dict(), last_action
-            )
+        while current_player is not None and num_steps < self.max_steps:
+            num_steps += 1
+            last_action = current_player.action(game_state)
 
-            print("---")
-            print(f"Current player: {self.players[current_player].name}")
+            verdict = self.manager.action(current_player.to_dict(), last_action)
+
+            print(f"---------STEP {num_steps}---------")
+            print(f"Current player: {current_player.name}")
             print(f"        Action: {last_action}")
             print(f"       Verdict: {verdict}")
             print("---")
 
             if "error" in verdict:
-                self.manager.invalid(self.players[current_player])
-                self.players[current_player].quit()
+                self.manager.invalid(current_player.to_dict())
+                current_player.quit()
+
+                # TODO: have a mech for deciding next player
+                # ig manager should give it to me
+                current_player = None
             elif "winner" in verdict:
                 self.state = "OVER"
 
@@ -49,5 +57,13 @@ class Controller:
 
                 break
             else:
-                current_player = verdict["next"]
+                next_id = verdict["next"]
+                next_player = list(filter(lambda x: x.id == next_id, self.players))
+
+                if len(next_player) == 0:
+                    print(f"Got unknown player id: {next_id}")
+                    sys.exit(1)
+
+                current_player = next_player[0]
+
                 game_state = verdict["state"]
