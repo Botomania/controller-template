@@ -1,14 +1,14 @@
 import sys
 
-import docker
+import secrets
 
-from . import secrets
+import docker
 
 
 def run(image, ports):
     print("Connecting to docker client...")
     try:
-        d = docker.DockerClient(base_url="tcp://docker:2735")
+        d = docker.DockerClient(base_url="tcp://docker:2375")
     except Exception as e:
         print(e)
         print("Error while connecting to docker client")

@@ -39,3 +39,9 @@ class Player:
 
     def quit(self):
         self.api.quit()
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+        }
