@@ -39,8 +39,8 @@ class Manager:
     def get_state(self):
         try:
             resp = self.api.get_state()
-        except ApiException:
-            print("Error in manager/get_state")
+        except ApiException as e:
+            print("Error in manager/get_state", e)
             sys.exit(1)
 
         return resp["state"]
@@ -50,8 +50,8 @@ class Manager:
 
         try:
             resp = self.api.evaluate(payload)
-        except ApiException:
-            print("Error in manager/action")
+        except ApiException as e:
+            print("Error in manager/action", e)
             sys.exit(1)
 
         return resp
@@ -61,6 +61,6 @@ class Manager:
 
         try:
             resp = self.api.invalidate(payload)
-        except ApiException:
-            print("Error in manager/invalid")
+        except ApiException as e:
+            print("Error in manager/invalid", e)
             sys.exit(1)
