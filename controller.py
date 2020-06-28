@@ -44,19 +44,7 @@ class Controller:
                 # ig manager should give it to me
                 current_player = None
             elif "winner" in verdict:
-                self.state = "OVER"
-
-                try:
-                    self.manager.quit()
-                except Exception:
-                    pass
-
-                for i in range(len(self.players)):
-                    try:
-                        self.players[i].quit()
-                    except Exception:
-                        pass
-
+                self.reset()
                 break
             else:
                 next_id = verdict["next"]
@@ -71,3 +59,15 @@ class Controller:
                 game_state = verdict["state"]
 
         self.state = "READY"
+
+    def reset(self):
+        try:
+            self.manager.quit()
+        except Exception:
+            pass
+
+        for i in range(len(self.players)):
+            try:
+                self.players[i].quit()
+            except Exception:
+                pass

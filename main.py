@@ -2,7 +2,7 @@ import json
 import sys
 import threading
 
-from flask import Flask, request
+from flask import Flask, request, jsonify
 
 import config
 from controller import Controller
@@ -46,6 +46,9 @@ def init():
 
 @app.route("/begin", methods=["POST"])
 def begin():
+    if c is None:
+        return json.dumps({"error": "initialize this first"})
+
     global t
 
     t = threading.Thread(target=c.start)
@@ -63,6 +66,19 @@ def stat():
         status = c.state
 
     return json.dumps({"status": status})
+
+
+@app.route("/reset", methods=["POST"])
+def reset():
+    global c
+
+    if c is None:
+        return jsonify({"success": True})
+
+    c.reset()
+    c = None
+
+    return jsonify({"success": True})
 
 
 if __name__ == "__main__":
