@@ -43,7 +43,7 @@ class Manager:
             print("Error in manager/get_state", e)
             sys.exit(1)
 
-        return resp["state"]
+        return resp.state
 
     def action(self, player, action):
         payload = {"player": player, "action": action}
