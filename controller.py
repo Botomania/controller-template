@@ -20,14 +20,20 @@ class Controller:
         while True:
             last_action = self.players[current_player].action(game_state)
 
-            manager_resp = self.manager.action(
+            verdict = self.manager.action(
                 self.players[current_player].to_dict(), last_action
             )
 
-            if "error" in manager_resp:
+            print("---")
+            print(f"Current player: {self.players[current_player].name}")
+            print(f"        Action: {last_action}")
+            print(f"       Verdict: {verdict}")
+            print("---")
+
+            if "error" in verdict:
                 self.manager.invalid(self.players[current_player])
                 self.players[current_player].quit()
-            elif "winner" in manager_resp:
+            elif "winner" in verdict:
                 self.state = "OVER"
 
                 try:
@@ -43,5 +49,5 @@ class Controller:
 
                 break
             else:
-                current_player = manager_resp["next"]
-                game_state = manager_resp["state"]
+                current_player = verdict["next"]
+                game_state = verdict["state"]
