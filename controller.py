@@ -14,6 +14,8 @@ class Controller:
         for player in players:
             self.players.append(Player(player, timeout))
 
+        self.state = "READY"
+
     def start(self):
         self.state = "RUNNING"
 
@@ -67,3 +69,5 @@ class Controller:
                 current_player = next_player[0]
 
                 game_state = verdict["state"]
+
+        self.state = "READY"
