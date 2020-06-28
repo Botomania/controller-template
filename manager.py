@@ -29,7 +29,7 @@ class Manager:
             except Exception:
                 time.sleep(0.5)
 
-        if not resp["success"]:
+        if not resp.success:
             print("Error in manager/init")
             sys.exit(1)
 
