@@ -1,4 +1,5 @@
 import sys
+import time
 
 from manager import Manager
 from player import Player
@@ -24,7 +25,8 @@ class Controller:
 
         num_steps = 0
 
-        while current_player is not None and num_steps < self.max_steps:
+        while num_steps < self.max_steps:
+            time.sleep(0.1)
             num_steps += 1
             last_action = current_player.action(game_state)
 
