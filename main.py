@@ -1,4 +1,3 @@
-import json
 import sys
 import threading
 
@@ -41,13 +40,13 @@ def init():
 
     c = Controller(players, manager, config.timeout, config.max_steps)
 
-    return json.dumps({"success": True})
+    return jsonify({"success": True})
 
 
 @app.route("/begin", methods=["POST"])
 def begin():
     if c is None:
-        return json.dumps({"error": "initialize this first"})
+        return jsonify({"error": "initialize this first"})
 
     global t
 
@@ -55,7 +54,15 @@ def begin():
     t.daemon = True
     t.start()
 
-    return json.dumps({"success": True})
+    return jsonify({"success": True})
+
+
+@app.route("/state", methods=["GET"])
+def status():
+    if c is None:
+        return jsonify({"error": "initialize this first"})
+
+    return jsonify({"state": c.manager.get_state()})
 
 
 @app.route("/status", methods=["GET"])
@@ -65,7 +72,7 @@ def stat():
     else:
         status = c.state
 
-    return json.dumps({"status": status})
+    return jsonify({"status": status})
 
 
 @app.route("/reset", methods=["POST"])
